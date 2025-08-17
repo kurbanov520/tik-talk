@@ -22,7 +22,7 @@ export class Auth {
   get isAuth() {
     if(!this.token) {
       this.token = this.cookieService.get('token')
-      this.refreshToken = this.cookieService.get('refreshToken')
+      this.refreshToken = this.cookieService.get('refresh_token')
     }
     return !!this.token
   }
