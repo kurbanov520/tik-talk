@@ -23,6 +23,8 @@ body {
   background-color: var(--dark-color);
   color: var(--light-color);
   background-image: url(/assets/imgs/background1920.jpg);
+  background-size: cover;
+  background-repeat: no-repeat;
 }
 
 .skill-tag {
@@ -72,6 +74,13 @@ body {
   font-weight: 800;
 }
 
+.h4 {
+  font-size: 24px;
+  font-style: normal;
+  font-weight: 800;
+  line-height: 32px;
+}
+
 .h6 {
   font-size: 18px;
   line-height: 24px;
@@ -89,6 +98,13 @@ body {
   font-size: 12px;
   font-weight: 500;
   line-height: 16px;
+}
+
+.regular {
+  font-size: 14px;
+  font-style: normal;
+  font-weight: 400;
+  line-height: 20px;
 }
 
 .tt-control-label {
