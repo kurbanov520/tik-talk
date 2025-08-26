@@ -16,7 +16,6 @@ import {PostFeed} from './post-feed/post-feed';
     AsyncPipe,
     SvgIcon,
     RouterLink,
-    NgForOf,
     ImgUrlPipe,
     PostFeed
   ],

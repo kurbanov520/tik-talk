@@ -37,8 +37,10 @@ export class Profile {
       )
   }
 
-  // patchProfile(profile: Partial<IProfile>) {
-  //   return this.http.patch(`${this.baseApiUrl}account/me`, profile)
-  // }
+  patchProfile(profile: Partial<IProfile>) {
+    console.log('patchprofile до return')
+    return this.http.patch<IProfile>(`${this.baseApiUrl}account/me`, profile)
+    console.log('patch после return')
+  }
 
  }
