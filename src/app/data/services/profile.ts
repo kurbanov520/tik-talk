@@ -38,9 +38,13 @@ export class Profile {
   }
 
   patchProfile(profile: Partial<IProfile>) {
-    console.log('patchprofile до return')
     return this.http.patch<IProfile>(`${this.baseApiUrl}account/me`, profile)
-    console.log('patch после return')
+  }
+
+  uploadAvatar(file: File) {
+    const fd = new FormData();
+    fd.append('image', file);
+    return this.http.post<IProfile>(`${this.baseApiUrl}account/upload_image`, fd)
   }
 
  }
