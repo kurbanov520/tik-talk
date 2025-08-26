@@ -14,6 +14,7 @@ export class Profile {
   baseApiUrl = 'https://icherniakov.ru/yt-course/'
 
   me = signal<IProfile | null>(null)
+  filteredProfiles = signal<IProfile[]>([])
 
   getTestAccounts() {
     return this.http.get<IProfile[]>(`${this.baseApiUrl}account/test_accounts`)
@@ -45,6 +46,13 @@ export class Profile {
     const fd = new FormData();
     fd.append('image', file);
     return this.http.post<IProfile>(`${this.baseApiUrl}account/upload_image`, fd)
+  }
+
+  filterProfiles(params: Record<string, any>) {
+    return this.http.get<IPageble<IProfile>>(`${this.baseApiUrl}account/accounts`, {params})
+      .pipe(
+        tap(res => this.filteredProfiles.set(res.items))
+      )
   }
 
  }

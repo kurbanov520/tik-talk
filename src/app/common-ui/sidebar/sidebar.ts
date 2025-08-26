@@ -2,7 +2,7 @@ import {Component, inject} from '@angular/core';
 import {SvgIcon} from '../svg-icon/svg-icon';
 import {AsyncPipe, JsonPipe, NgForOf} from '@angular/common';
 import {SubscriberCard} from './subscriber-card/subscriber-card';
-import {RouterLink} from '@angular/router';
+import {RouterLink, RouterLinkActive} from '@angular/router';
 import {Profile} from '../../data/services/profile';
 import {firstValueFrom} from 'rxjs';
 import {ImgUrlPipe} from '../../helpers/pipes/img-url-pipe';
@@ -15,7 +15,8 @@ import {ImgUrlPipe} from '../../helpers/pipes/img-url-pipe';
     SubscriberCard,
     RouterLink,
     AsyncPipe,
-    ImgUrlPipe
+    ImgUrlPipe,
+    RouterLinkActive
   ],
   templateUrl: './sidebar.html',
   styleUrl: './sidebar.scss',
