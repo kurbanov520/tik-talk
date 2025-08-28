@@ -17,10 +17,10 @@ export interface IPost {
   updatedAt: string,
   likes: number,
   likesUsers: string[],
-  comments: Comment[]
+  comments: IComment[]
 }
 
-export interface Comment {
+export interface IComment {
   id: number,
   text: string,
   author: IProfile,
@@ -28,4 +28,10 @@ export interface Comment {
   commentId: number,
   createdAt: string,
   updatedAt: string,
+}
+
+export interface CommentCreateDto {
+  text: string,
+  authorId: number,
+  postId: number,
 }

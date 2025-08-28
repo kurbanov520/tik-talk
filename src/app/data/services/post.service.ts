@@ -1,8 +1,7 @@
 import {inject, Injectable, signal} from '@angular/core';
 import {HttpClient} from '@angular/common/http';
-import {IPost, PostCreateDto} from '../interfaces/post.interface';
-import {IProfile} from '../interfaces/profile.interface';
-import {switchMap, tap} from 'rxjs';
+import {CommentCreateDto, IComment, IPost, PostCreateDto} from '../interfaces/post.interface';
+import {map, switchMap, tap} from 'rxjs';
 
 @Injectable({
   providedIn: 'root'
@@ -31,5 +30,15 @@ export class PostService {
       )
   }
 
+  createComment(payload: CommentCreateDto) {
+    return this.#http.post<IComment>(`${this.baseApiUrl}comment/`, payload)
+  }
+
+  getCommentsByPostId(postId: number) {
+    return this.#http.get<IPost>(`${this.baseApiUrl}post/${postId}`)
+      .pipe(
+        map(res => res.comments)
+      )
+  }
 
 }
