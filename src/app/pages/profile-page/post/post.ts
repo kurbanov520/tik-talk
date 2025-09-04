@@ -7,6 +7,7 @@ import {PostInput} from '../post-input/post-input';
 import {Comment} from './comment/comment';
 import {PostService} from '../../../data/services/post.service';
 import {firstValueFrom} from 'rxjs';
+import {PostDatePipe} from '../../../helpers/pipes/post-date-pipe';
 
 @Component({
   selector: 'app-post',
@@ -15,7 +16,8 @@ import {firstValueFrom} from 'rxjs';
     DatePipe,
     SvgIcon,
     PostInput,
-    Comment
+    Comment,
+    PostDatePipe
   ],
   templateUrl: './post.html',
   styleUrl: './post.scss'

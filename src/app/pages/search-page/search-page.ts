@@ -19,8 +19,4 @@ export class SearchPage {
 
   profile = inject(Profile)
   profiles = this.profile.filteredProfiles
-
-  constructor() {
-
-  }
 }

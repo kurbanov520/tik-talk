@@ -4,13 +4,16 @@ import {FormBuilder, FormControl, FormGroup, ReactiveFormsModule, Validators} fr
 import {Profile} from '../../data/services/profile';
 import {firstValueFrom} from 'rxjs';
 import {AvatarUpload} from './avatar-upload/avatar-upload';
+import {toObservable} from '@angular/core/rxjs-interop';
+import {AsyncPipe} from '@angular/common';
 
 @Component({
   selector: 'app-settings-page',
   imports: [
     ProfileHeader,
     ReactiveFormsModule,
-    AvatarUpload
+    AvatarUpload,
+    AsyncPipe
   ],
   templateUrl: './settings-page.html',
   styleUrl: './settings-page.scss'
@@ -19,7 +22,10 @@ export class SettingsPage {
   fb = inject(FormBuilder)
   profileService = inject(Profile)
 
+
   @ViewChild(AvatarUpload) avatarUploader: any
+
+  profile$ = toObservable(this.profileService.me)
 
   form = this.fb.group({
     firstName: ['', Validators.required],
@@ -38,10 +44,6 @@ export class SettingsPage {
       stack: this.mergeStack(this.profileService.me()?.stack)
       })
     });
-  }
-
-  ngAfterViewInit() {
-
   }
 
   onSave() {
