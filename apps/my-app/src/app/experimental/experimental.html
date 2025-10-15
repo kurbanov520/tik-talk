@@ -1,0 +1,142 @@
+<form [formGroup]="form" (ngSubmit)="onSubmit()">
+  <h1 class="mb60">Услуги телемастера</h1>
+
+  <label class="tt-control-label mb16">
+    Выберите марку телевизора
+    <select class="tt-input" formControlName="brand">
+      <option [value]="tvBrand.LG">LG</option>
+      <option [value]="tvBrand.SAMSUNG">SAMSUNG</option>
+      <option [value]="tvBrand.SONY">SONY</option>
+      <option [value]="tvBrand.PHILLIPS">PHILLIPS</option>
+    </select>
+  </label>
+
+  <label class="tt-control-label mb16">
+    Выберите услугу
+    <select class="tt-input" formControlName="service">
+      <option [value]="service.REPAIR">РЕМОНТ</option>
+      <option [value]="service.SETTINGS">НАСТРОЙКА И ДИАГНОСТИКА</option>
+      <option [value]="service.REPLACEMENT">ЗАМЕНА КОМПЛИКТУЮЩИХ</option>
+      <option [value]="service.CHANNEL">НАСТРОЙКА КАНАЛОВ</option>
+    </select>
+  </label>
+
+  @if(form.controls.service.value === service.REPAIR) {
+  <label class="tt-control-label mb16">
+    Гарантия
+    <select class="tt-input" formControlName="guarantee" m>
+      @for (guarantee of guarantees; track guarantee;) {
+      <option [value]="guarantee.value">{{ guarantee.label }}</option>
+      }
+    </select>
+  </label>
+  }
+
+  <label class="tt-control-label mb16">
+    Имя клиента
+    <input type="text" class="tt-input" formControlName="nameClient" />
+
+    @if(form.controls.nameClient.touched && form.controls.nameClient.hasError('nameValid')) {
+    {{ form.controls.nameClient.getError('nameValid')?.message }}
+    } @if(form.controls.nameClient.touched && form.controls.nameClient.hasError('startsWith')) {
+    {{ form.controls.nameClient.getError('startsWith')?.message }}
+    }
+
+    <!--    @if(form.controls.nameClient.touched && form.controls.nameClient.hasError('required')) {-->
+    <!--      <small>Это поле обязательное</small>-->
+    <!--    }-->
+  </label>
+
+  <div style="display: flex; justify-content: space-between">
+    <h4 class="h6 mb16">Период доставки</h4>
+  </div>
+
+  <div class="two-columns" formGroupName="dateRange">
+    <label class="tt-control-label mb16">
+      От
+      <input type="date" class="tt-input" formControlName="from" />
+    </label>
+
+    <label class="tt-control-label mb16">
+      До
+      <input type="date" class="tt-input" formControlName="to" />
+    </label>
+  </div>
+
+  @if (form.controls.dateRange.touched && form.controls.dateRange.hasError('dateRange')) {
+  <small>{{ form.controls.dateRange.getError('dateRange')?.message }}</small>
+  }
+
+  <label class="tt-control-label mb16">
+    Телефон
+    <input
+      value="+7"
+      type="text"
+      class="tt-input"
+      formControlName="phoneClient"
+      [maskito]="phoneMask"
+    />
+    @if(form.controls.phoneClient.touched && form.controls.phoneClient.hasError('required')) {
+    <small>Это поле обязательное</small>
+    }
+  </label>
+
+  <label class="tt-control-label">
+    Описание проблемы
+    <textarea
+      formControlName="problem"
+      class="tt-input tt-textarea"
+      placeholder="Например: Телевизор не включается"
+    ></textarea>
+  </label>
+
+  <div>
+    <div class="delivery_address">
+      <h1 class="mt20">Адрес доставки</h1>
+      <button (click)="addAddress()" class="btn delivery_address_btn">+ Добавить</button>
+    </div>
+
+    @for (arrs of form.controls.addressClient.controls; track arrs; let i = $index) {
+
+    <div class="div_grid mb20 mt20" [formGroup]="arrs">
+      <label class="tt-control-label">
+        Город
+        <input class="tt-input" type="text" placeholder="Город" formControlName="city" />
+      </label>
+
+      <label class="tt-control-label">
+        Улица
+        <input class="tt-input" type="text" placeholder="Улица" formControlName="street" />
+      </label>
+
+      <label class="tt-control-label">
+        Дом
+        <input class="tt-input" type="text" placeholder="Дом" formControlName="building" />
+      </label>
+
+      <label class="tt-control-label">
+        Квартира
+        <input class="tt-input" type="text" placeholder="Квартира" formControlName="apartment" />
+      </label>
+    </div>
+    <button (click)="deleteAddress(i)" class="btn">Удалить адрес</button>
+
+    }
+  </div>
+
+  <div [formGroup]="form.controls.features">
+    <h1>Дополнительно</h1>
+
+    <div style="display: grid; grid-gap: 16px">
+      @for (control of form.controls.features.controls | keyvalue: sort; track control; let i =
+      $index) {
+      <label>
+        {{ features[i].label }}
+        <input type="checkbox" [formControlName]="control.key" />
+      </label>
+      }
+    </div>
+  </div>
+
+  <button class="btn btn-shadow mt20">Отправить заявку</button>
+</form>

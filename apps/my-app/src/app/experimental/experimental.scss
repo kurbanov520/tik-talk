@@ -1,0 +1,43 @@
+:host {
+  display: grid;
+  place-content: center;
+}
+
+.div_grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  grid-gap: 10px;
+}
+
+.delivery_address {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  align-items: end;
+  justify-items: end;
+}
+
+.delivery_address_btn {
+  width: 200px;
+  height: 50px;
+}
+
+.tt-input.ng-invalid.ng-touched {
+  border: 1px solid tomato;
+}
+
+.two-columns {
+  display: grid;
+  margin-top: 12px;
+  margin-bottom: 12px;
+  grid-gap: 12px;
+  grid-template-columns: repeat(2, 1fr);
+}
+
+.tt-input::-webkit-calendar-picker-indicator {
+  background: var(--primary-color);
+  cursor: pointer;
+}
+
+.tt-input.ng-pending {
+  border: 2px dashed var(--primary-color);
+}
