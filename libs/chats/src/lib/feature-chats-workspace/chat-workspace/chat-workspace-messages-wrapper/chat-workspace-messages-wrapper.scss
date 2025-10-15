@@ -1,0 +1,13 @@
+:host {
+  display: grid;
+  padding: 16px 20px;
+  grid-template-rows: 1fr min-content;
+}
+
+.messages_wrapper {
+  display: grid;
+  grid-gap: 12px;
+  height: 761px;
+  overflow-y: scroll;
+  scrollbar-width: none;
+}
