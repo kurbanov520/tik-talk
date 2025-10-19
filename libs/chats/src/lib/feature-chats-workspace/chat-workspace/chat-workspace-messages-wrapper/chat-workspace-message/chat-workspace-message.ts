@@ -1,5 +1,5 @@
 import { Component, HostBinding, input } from '@angular/core';
-import { IMessage } from '../../../../data/interfaces/chats.interface';
+import { IMessage } from '../../../../../../../data-access/src/lib/chats/interfaces/chats.interface';
 import { DatePipe } from '@angular/common';
 import {AvatarCircle} from '@tt/common-ui';
 

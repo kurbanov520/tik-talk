@@ -1,8 +1,8 @@
 import { Component, inject, input, signal } from '@angular/core';
 import { ChatWorkspaceMessage } from './chat-workspace-message/chat-workspace-message';
 import { MessageInput } from '../../../ui/message-input/message-input';
-import { ChatsService } from '../../../data/services/chats.service';
-import { IChats } from '../../../data/interfaces/chats.interface';
+import { ChatsService } from '../../../../../../data-access/src/lib/chats/services/chats.service';
+import { IChats } from '../../../../../../data-access/src/lib/chats/interfaces/chats.interface';
 import { firstValueFrom, timer } from 'rxjs';
 
 @Component({

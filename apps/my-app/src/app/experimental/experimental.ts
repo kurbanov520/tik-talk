@@ -10,7 +10,7 @@ import {
   Validators,
 } from '@angular/forms';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
-import { IFeature, MockService } from '../../../../../libs/chats/src/lib/data/services/mock.service';
+import { IFeature, MockService } from '../../../../../libs/data-access/src/lib/chats/services/mock.service';
 import { KeyValuePipe } from '@angular/common';
 import { MaskitoOptions } from '@maskito/core';
 import { MaskitoDirective } from '@maskito/angular';

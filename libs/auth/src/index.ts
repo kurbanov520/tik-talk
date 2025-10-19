@@ -1,6 +1,6 @@
-import { canActivateAuth } from "./lib/auth/access.guard";
-import { Auth } from "./lib/auth/auth";
-import { authTokenInterceptor } from "./lib/auth/auth.interceptor";
+import { canActivateAuth } from "../../data-access/src/lib/auth/access.guard";
+import { Auth } from "../../data-access/src/lib/auth/auth";
+import { authTokenInterceptor } from "../../data-access/src/lib/auth/auth.interceptor";
 
 export {
   canActivateAuth,

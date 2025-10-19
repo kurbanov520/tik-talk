@@ -2,7 +2,7 @@ import { Component, ElementRef, HostListener, inject, Renderer2 } from '@angular
 import { debounceTime, firstValueFrom, fromEvent } from 'rxjs';
 import { Post } from '../post/post';
 import { PostFeedInput } from '../../ui/post-feed-input/post-feed-input';
-import { PostService } from '../../data/services/post.service';
+import { PostService } from '../../../../../data-access/src/lib/posts/services/post.service';
 import {GlobalStoreService} from '@tt/shared';
 
 @Component({

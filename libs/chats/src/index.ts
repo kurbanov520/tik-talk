@@ -1,1 +1,1 @@
-export * from './lib/data'
+export * from '../../data-access/src/lib/chats'
