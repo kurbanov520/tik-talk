@@ -4,6 +4,8 @@ import { Post } from '../post/post';
 import { PostFeedInput } from '../../ui/post-feed-input/post-feed-input';
 import { PostService } from '../../../../../data-access/src/lib/posts/services/post.service';
 import {GlobalStoreService} from '@tt/shared';
+import {Store} from '@ngrx/store';
+import {postActions, selectedPosts} from '@tt/posts';
 
 @Component({
   selector: 'app-post-feed',
@@ -12,16 +14,21 @@ import {GlobalStoreService} from '@tt/shared';
   styleUrl: './post-feed.scss',
 })
 export class PostFeed {
+  store = inject(Store)
   postService = inject(PostService);
   hostElement = inject(ElementRef);
   r2 = inject(Renderer2);
   profile = inject(GlobalStoreService).me;
 
-  feed = this.postService.posts;
+  feed = this.store.selectSignal(selectedPosts)
 
   @HostListener('window:resize')
   onWindowResize() {
     this.resizeFeed();
+  }
+
+  ngOnInit() {
+    this.store.dispatch(postActions.fetchPosts())
   }
 
   constructor() {
@@ -56,4 +63,6 @@ export class PostFeed {
       );
     }
   }
+
+
 }
