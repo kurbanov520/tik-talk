@@ -25,12 +25,6 @@ export const postFeature = createFeature({
         ...state
     })),
 
-    on(postActions.createPostSuccess, (state, {payload}) => {
-      return {
-        ...state,
-        posts: {...state.posts, payload}
-      }
-    })
 
 
   )

@@ -2,6 +2,8 @@ import { Component, EventEmitter, inject, input, Output, Renderer2 } from '@angu
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import {AvatarCircle, SvgIcon} from '@tt/common-ui';
 import {GlobalStoreService} from '@tt/shared';
+import {Store} from '@ngrx/store';
+import {postActions} from '@tt/posts';
 
 @Component({
   selector: 'app-post-feed-input',

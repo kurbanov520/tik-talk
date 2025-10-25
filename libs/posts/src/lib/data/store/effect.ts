@@ -29,18 +29,13 @@ export class postEffect {
     return this.actions$.pipe(
       ofType(postActions.createPost),
       switchMap(({payload}) => {
-        return this.postService.createPost({
-          title: payload.title,
-          content: payload.content,
-          authorId: payload.authorId,
-        })
+        return this.postService.createPost(payload)
           .pipe(
             map((payload) => postActions.fetchPosts())
           )
       })
     )
   })
-
 
 
 }

@@ -1,6 +1,6 @@
 import {createActionGroup, emptyProps, props} from '@ngrx/store';
-import {IPost} from '@tt/data-access';
-import {PostCreateDto} from '../../../../../data-access/src/lib/posts/interfaces/post.interface';
+import {IComment, IPost} from '@tt/data-access';
+import {CommentCreateDto, PostCreateDto} from '../../../../../data-access/src/lib/posts/interfaces/post.interface';
 
 export const postActions = createActionGroup({
   source: 'post',

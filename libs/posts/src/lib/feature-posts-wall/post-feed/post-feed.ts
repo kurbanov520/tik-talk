@@ -54,13 +54,13 @@ export class PostFeed {
     if (!text) return;
 
     if (text) {
-      firstValueFrom(
-        this.postService.createPost({
-          title: 'Клевый пост',
-          content: text,
-          authorId: this.profile()!.id,
-        })
-      );
+        this.store.dispatch(postActions.createPost({
+          payload: {
+            title: 'Клевый пост',
+            content: text,
+            authorId: this.profile()!.id,
+          }
+        }))
     }
   }
 
