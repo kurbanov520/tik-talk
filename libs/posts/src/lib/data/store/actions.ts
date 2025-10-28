@@ -11,4 +11,6 @@ export const postActions = createActionGroup({
     'Create Post': props<{payload: PostCreateDto}>(),
     'Create Post Success': props<{payload: IPost}>(),
   }
+
+
 })

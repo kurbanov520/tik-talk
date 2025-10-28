@@ -13,7 +13,6 @@ import {profileActions} from '../../data';
 })
 export class ProfileFilters implements OnDestroy {
   fb = inject(FormBuilder);
-  profileService = inject(Profile);
   store = inject(Store);
 
   searchForm = this.fb.group({

@@ -15,7 +15,6 @@ import {postActions, selectedPosts} from '@tt/posts';
 })
 export class PostFeed {
   store = inject(Store)
-  postService = inject(PostService);
   hostElement = inject(ElementRef);
   r2 = inject(Renderer2);
   profile = inject(GlobalStoreService).me;
@@ -29,10 +28,6 @@ export class PostFeed {
 
   ngOnInit() {
     this.store.dispatch(postActions.fetchPosts())
-  }
-
-  constructor() {
-    firstValueFrom(this.postService.fetchPosts());
   }
 
   ngAfterViewInit() {

@@ -5,11 +5,13 @@ import {IProfile} from '@tt/interfaces/profile';
 export interface ProfileState {
   profiles: IProfile[],
   profileFilters: Record<string, any>
+  term: string,
 }
 
 export const initialState: ProfileState = {
   profiles: [],
-  profileFilters: {}
+  profileFilters: {},
+  term: '',
 }
 
 export const profileFeature = createFeature({
@@ -21,6 +23,6 @@ export const profileFeature = createFeature({
         ...state,
         profiles: payload.profiles,
       }
-    })
+    }),
   )
 })

@@ -36,4 +36,7 @@ export class PostService {
       .get<IPost>(`${this.baseApiUrl}post/${postId}`)
       .pipe(map((res) => res.comments));
   }
+
+
+
 }

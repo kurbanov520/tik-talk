@@ -20,12 +20,9 @@ export const postFeature = createFeature({
       posts
     })),
 
-
     on(postActions.createPost, (state, {payload}) => ({
         ...state
     })),
-
-
 
   )
 

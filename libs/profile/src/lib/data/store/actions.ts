@@ -1,4 +1,4 @@
-import {createActionGroup, props} from '@ngrx/store';
+import {createActionGroup, emptyProps, props} from '@ngrx/store';
 import {IProfile} from '@tt/interfaces/profile';
 
 export const profileActions = createActionGroup({
