@@ -1,4 +1,4 @@
-import { inject, Injectable, signal } from '@angular/core';
+import {inject, Injectable, signal, WritableSignal} from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { IChats, IMessage, LastMessageRes } from '../interfaces/chats.interface';
 import {map, Observable} from 'rxjs';
@@ -7,7 +7,7 @@ import {ChatWsService} from '../interfaces/chat-ws-service.interface';
 import {ChatWsNativeService} from './chat-ws-native';
 import {Auth} from '@tt/data-access';
 import {ChatWSMessage} from '../interfaces/chat-ws-message.interface';
-import {isNewMessage, isUnreadMessage} from '../interfaces/type-guards';
+import {isErrorMessage, isNewMessage, isUnreadMessage} from '../interfaces/type-guards';
 import {ChatWSRxService} from '../interfaces/chat-ws-rxjs.service';
 
 @Injectable({
@@ -19,7 +19,7 @@ export class ChatsService {
   #authService = inject(Auth)
 
   wsAdapter: ChatWsService = new ChatWSRxService()
-
+  unreadMessagesCount = signal(0)
   activeChatMessages = signal<IMessage[]>([]);
 
   baseApiUrl = 'https://icherniakov.ru/yt-course/';
@@ -35,10 +35,11 @@ export class ChatsService {
   }
 
   handleWSMessage = (message: ChatWSMessage) => {
+    console.log(message)
     if(!('action' in message)) return
 
     if(isUnreadMessage(message)) {
-      // что то делаем
+      this.unreadMessagesCount.set(message.data.count)
     }
 
     if(isNewMessage(message)) {

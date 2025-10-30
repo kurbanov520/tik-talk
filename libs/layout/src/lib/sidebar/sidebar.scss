@@ -96,3 +96,10 @@
 .sidebar-subscribers-card {
   cursor: pointer;
 }
+
+.unreadMessages {
+  background: var(--primary-color);
+  width: 20px;
+  text-align: center;
+  color: white;
+}

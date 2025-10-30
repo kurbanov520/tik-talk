@@ -13,9 +13,9 @@ import {takeUntilDestroyed} from '@angular/core/rxjs-interop';
 export class ChatsPageComponent {
   #chatService = inject(ChatsService)
 
-  constructor() {
-    this.#chatService.connectWs()
-      .pipe(takeUntilDestroyed())
-      .subscribe()
-  }
+  // constructor() {
+  //   this.#chatService.connectWs()
+  //     .pipe(takeUntilDestroyed())
+  //     .subscribe()
+  // }
 }

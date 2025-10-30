@@ -2,12 +2,18 @@
 
 <nav>
   <ul class="main-menu-list">
-    <li *ngFor="let menuItem of menuItems">
-      <a class="menu-item" [routerLink]="[menuItem.link]" routerLinkActive="active">
-        <svg [icon]="menuItem.icon"></svg>
-        <span>{{ menuItem.label }}</span>
-      </a>
-    </li>
+    @for (menuItem of menuItems; track menuItem) {
+      <li>
+        <a class="menu-item" [routerLink]="[menuItem.link]" routerLinkActive="active">
+          <svg [icon]="menuItem.icon"></svg>
+          <span>{{ menuItem.label }}</span>
+
+          @if(menuItem.label === 'Чаты' && unreadMessages() > 0) {
+            <span class="unreadMessages">{{ unreadMessages() }}</span>
+          }
+        </a>
+      </li>
+    }
   </ul>
 </nav>
 
@@ -16,6 +22,7 @@
 @for (profile of subscribers$ | async; track profile.id) {
 <app-subscriber-card class="sidebar-subscribers-card" [profile]="profile" [routerLink]="['/profile', profile.id]"> </app-subscriber-card>
 }
+
 
 <div class="mt20 to-subscribers">
   <a [routerLink]="['/subscribers']" class="to-subscribers-link medium-text"> Все подписчики </a>
