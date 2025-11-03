@@ -1,4 +1,4 @@
-import {Component, DestroyRef, inject, OnInit, WritableSignal} from '@angular/core';
+import {ChangeDetectionStrategy, Component, DestroyRef, inject, OnInit, WritableSignal} from '@angular/core';
 import { AsyncPipe } from '@angular/common';
 import { SubscriberCard } from './subscriber-card/subscriber-card';
 import { RouterLink, RouterLinkActive } from '@angular/router';
@@ -6,14 +6,13 @@ import {firstValueFrom, Subscription, timer} from 'rxjs';
 import {ImgUrlPipe, SvgIcon} from '@tt/common-ui';
 import {Profile} from '@tt/profile';
 import {Auth, ChatsService} from '@tt/data-access';
-import {takeUntilDestroyed} from '@angular/core/rxjs-interop';
-import {isErrorMessage} from '../../../../data-access/src/lib/chats/interfaces/type-guards';
 
 @Component({
   selector: 'app-sidebar',
   imports: [SvgIcon, SubscriberCard, RouterLink, AsyncPipe, ImgUrlPipe, RouterLinkActive],
   templateUrl: './sidebar.html',
   styleUrl: './sidebar.scss',
+  changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class Sidebar implements OnInit {
   profileService = inject(Profile);

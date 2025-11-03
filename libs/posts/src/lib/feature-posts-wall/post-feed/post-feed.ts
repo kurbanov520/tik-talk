@@ -1,4 +1,4 @@
-import { Component, ElementRef, HostListener, inject, Renderer2 } from '@angular/core';
+import {ChangeDetectionStrategy, Component, ElementRef, HostListener, inject, Renderer2} from '@angular/core';
 import { debounceTime, firstValueFrom, fromEvent } from 'rxjs';
 import { Post } from '../post/post';
 import { PostFeedInput } from '../../ui/post-feed-input/post-feed-input';
@@ -12,6 +12,7 @@ import {postActions, selectedPosts} from '@tt/posts';
   imports: [Post, PostFeedInput],
   templateUrl: './post-feed.html',
   styleUrl: './post-feed.scss',
+  changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class PostFeed {
   store = inject(Store)

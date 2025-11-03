@@ -1,4 +1,4 @@
-import { Component, Input } from '@angular/core';
+import {ChangeDetectionStrategy, Component, Input} from '@angular/core';
 import { ImgUrlPipe } from '@tt/common-ui';
 import {IProfile} from '@tt/interfaces/profile';
 import {RouterLink} from '@angular/router';
@@ -8,6 +8,7 @@ import {RouterLink} from '@angular/router';
   imports: [ImgUrlPipe, RouterLink],
   templateUrl: './profile-card.html',
   styleUrl: './profile-card.scss',
+  changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class ProfileCard {
   @Input() profile!: IProfile;

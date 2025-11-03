@@ -1,4 +1,4 @@
-import { Component, EventEmitter, inject, input, Output, Renderer2 } from '@angular/core';
+import {ChangeDetectionStrategy, Component, EventEmitter, inject, input, Output, Renderer2} from '@angular/core';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import {AvatarCircle, SvgIcon} from '@tt/common-ui';
 import {GlobalStoreService} from '@tt/shared';
@@ -10,6 +10,7 @@ import {postActions} from '@tt/posts';
   imports: [ReactiveFormsModule, FormsModule, AvatarCircle, SvgIcon],
   templateUrl: './post-feed-input.html',
   styleUrl: './post-feed-input.scss',
+  changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class PostFeedInput {
   r2 = inject(Renderer2);

@@ -21,6 +21,7 @@ export class ChatsService {
   wsAdapter: ChatWsService = new ChatWSRxService()
   unreadMessagesCount = signal(0)
   activeChatMessages = signal<IMessage[]>([]);
+  activeChat = signal<IChats | null>(null)
 
   baseApiUrl = 'https://icherniakov.ru/yt-course/';
   chatsUrl = `${this.baseApiUrl}chat/`;
@@ -35,7 +36,6 @@ export class ChatsService {
   }
 
   handleWSMessage = (message: ChatWSMessage) => {
-    console.log(message)
     if(!('action' in message)) return
 
     if(isUnreadMessage(message)) {
@@ -69,11 +69,12 @@ export class ChatsService {
   getChatById(chatId: number) {
     return this.http.get<IChats>(`${this.chatsUrl}${chatId}`).pipe(
       map((chat) => {
+        this.activeChat.set(chat)
         const patchedMessages = chat.messages.map((message) => {
           return {
             ...message,
             user: chat.userFirst.id === message.userFromId ? chat.userFirst : chat.userSecond,
-            isMine: message.userFromId === this.me()!.id,
+            isMine: message.userFromId === this.me()?.id,
           };
         });
 
@@ -81,7 +82,7 @@ export class ChatsService {
 
         return {
           ...chat,
-          companion: chat.userFirst.id === this.me()!.id ? chat.userSecond : chat.userFirst,
+          companion: chat.userFirst.id === this.me()?.id ? chat.userSecond : chat.userFirst,
           messages: patchedMessages,
         };
       })

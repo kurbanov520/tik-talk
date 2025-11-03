@@ -60,7 +60,7 @@ export class Auth {
     this.token = res.access_token;
     this.refreshToken = res.refresh_token;
 
-    this.cookieService.set('token', this.token, {path: '/'});
-    this.cookieService.set('refresh_token', this.refreshToken, {path: '/'});
+    this.cookieService.set('token', this.token);
+    this.cookieService.set('refresh_token', this.refreshToken);
   }
 }
