@@ -1,31 +1,34 @@
-import { Component, ElementRef, HostListener, inject, Renderer2 } from '@angular/core';
+import {ChangeDetectionStrategy, Component, ElementRef, HostListener, inject, Renderer2} from '@angular/core';
 import { debounceTime, firstValueFrom, fromEvent } from 'rxjs';
 import { Post } from '../post/post';
 import { PostFeedInput } from '../../ui/post-feed-input/post-feed-input';
 import { PostService } from '../../../../../data-access/src/lib/posts/services/post.service';
 import {GlobalStoreService} from '@tt/shared';
+import {Store} from '@ngrx/store';
+import {postActions, selectedPosts} from '@tt/posts';
 
 @Component({
   selector: 'app-post-feed',
   imports: [Post, PostFeedInput],
   templateUrl: './post-feed.html',
   styleUrl: './post-feed.scss',
+  changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class PostFeed {
-  postService = inject(PostService);
+  store = inject(Store)
   hostElement = inject(ElementRef);
   r2 = inject(Renderer2);
   profile = inject(GlobalStoreService).me;
 
-  feed = this.postService.posts;
+  feed = this.store.selectSignal(selectedPosts)
 
   @HostListener('window:resize')
   onWindowResize() {
     this.resizeFeed();
   }
 
-  constructor() {
-    firstValueFrom(this.postService.fetchPosts());
+  ngOnInit() {
+    this.store.dispatch(postActions.fetchPosts())
   }
 
   ngAfterViewInit() {
@@ -47,13 +50,15 @@ export class PostFeed {
     if (!text) return;
 
     if (text) {
-      firstValueFrom(
-        this.postService.createPost({
-          title: 'Клевый пост',
-          content: text,
-          authorId: this.profile()!.id,
-        })
-      );
+        this.store.dispatch(postActions.createPost({
+          payload: {
+            title: 'Клевый пост',
+            content: text,
+            authorId: this.profile()!.id,
+          }
+        }))
     }
   }
+
+
 }

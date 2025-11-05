@@ -1,17 +1,68 @@
-import { Component, inject, signal } from '@angular/core';
+import {ChangeDetectionStrategy, Component, inject, signal} from '@angular/core';
 import { ProfileFilters } from '../profile-filters/profile-filters';
-import {Profile} from '@tt/profile';
 import { ProfileCard } from '../../ui/profile-card/profile-card';
+import {Store} from '@ngrx/store';
+import {profileActions, selectFilteredProfiles} from '../../data';
+import {InfiniteScrollTriggerComponent} from '@tt/common-ui';
+import {WaIntersectionObservee, WaIntersectionObserverDirective} from '@ng-web-apis/intersection-observer';
+import {InfiniteScrollDirective} from 'ngx-infinite-scroll';
+import {Profile} from '@tt/data-access';
+import {firstValueFrom, scan, Subject} from 'rxjs';
+import {IProfile} from '@tt/interfaces/profile';
+import {AsyncPipe} from '@angular/common';
 
 @Component({
   selector: 'app-search-page',
-  imports: [ProfileCard, ProfileFilters],
+  imports: [ProfileCard, ProfileFilters, InfiniteScrollTriggerComponent, WaIntersectionObserverDirective, WaIntersectionObservee, InfiniteScrollDirective, AsyncPipe],
   templateUrl: './search-page.html',
   styleUrl: './search-page.scss',
+  changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class SearchPage {
-  protected readonly title = signal('my-app');
+  store = inject(Store)
+  profileService = inject(Profile)
+  profiles = this.store.selectSignal(selectFilteredProfiles);
+  console = console
 
-  profile = inject(Profile);
-  profiles = this.profile.filteredProfiles;
+  constructor() {}
+
+  timeToFetch() {
+    this.store.dispatch(profileActions.setPage({}))
+  }
+
+  profilesSubject$ = new Subject<IProfile[]>()
+
+  infiniteProfiles$ = this.profilesSubject$.pipe(
+    scan((acc, curr) => {
+      return acc.concat(curr) as IProfile[]
+    }, [] as IProfile[])
+  )
+
+  page = 0
+
+  ngOnInit() {
+    this.getNextPage()
+  }
+
+  async getNextPage() {
+    this.page += 1
+    const res = await firstValueFrom(this.profileService.filterProfiles({page: this.page}))
+
+    this.profilesSubject$.next(res.items)
+  }
+
+  onIntersection(entries: IntersectionObserverEntry[]) {
+    if(!entries.length) return
+
+    if(entries[0].intersectionRatio > 0) {
+      this.timeToFetch()
+    }
+  }
+
+  onScroll() {
+    this.getNextPage()
+  }
+
+
+
 }

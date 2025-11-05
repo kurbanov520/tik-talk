@@ -10,10 +10,9 @@ import {IProfile} from '@tt/interfaces/profile';
 export class Profile {
   http = inject(HttpClient);
   #globalStoreService = inject(GlobalStoreService)
-  baseApiUrl = 'https://icherniakov.ru/yt-course/';
+  baseApiUrl = '/yt-course/';
 
   me = signal<IProfile | null>(null);
-  filteredProfiles = signal<IProfile[]>([]);
 
   getTestAccounts() {
     return this.http.get<IProfile[]>(`${this.baseApiUrl}account/test_accounts`);
@@ -51,6 +50,5 @@ export class Profile {
   filterProfiles(params: Record<string, any>) {
     return this.http
       .get<IPageble<IProfile>>(`${this.baseApiUrl}account/accounts`, { params })
-      .pipe(tap((res) => this.filteredProfiles.set(res.items)));
   }
 }

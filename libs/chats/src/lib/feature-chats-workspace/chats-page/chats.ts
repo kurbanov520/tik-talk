@@ -1,11 +1,21 @@
-import { Component } from '@angular/core';
+import {ChangeDetectionStrategy, Component, inject, OnInit} from '@angular/core';
 import { RouterOutlet } from '@angular/router';
-import { ChatsList } from '../../../../../../libs/chats/src/lib/feature-chats-workspace/chats-list/chats-list';
+import {ChatsList} from '../chats-list/chats-list';
+import {ChatsService} from '@tt/data-access';
 
 @Component({
   selector: 'app-chats',
   imports: [RouterOutlet, ChatsList],
   templateUrl: './chats.html',
   styleUrl: './chats.scss',
+  changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class ChatsPageComponent {}
+export class ChatsPageComponent {
+  #chatService = inject(ChatsService)
+
+  // constructor() {
+  //   this.#chatService.connectWs()
+  //     .pipe(takeUntilDestroyed())
+  //     .subscribe()
+  // }
+}

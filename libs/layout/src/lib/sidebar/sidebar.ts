@@ -1,23 +1,47 @@
-import { Component, inject, signal } from '@angular/core';
-import { AsyncPipe, JsonPipe, NgForOf } from '@angular/common';
+import {ChangeDetectionStrategy, Component, DestroyRef, inject, OnInit, WritableSignal} from '@angular/core';
+import { AsyncPipe } from '@angular/common';
 import { SubscriberCard } from './subscriber-card/subscriber-card';
 import { RouterLink, RouterLinkActive } from '@angular/router';
-import { firstValueFrom } from 'rxjs';
+import {firstValueFrom, Subscription, timer} from 'rxjs';
 import {ImgUrlPipe, SvgIcon} from '@tt/common-ui';
 import {Profile} from '@tt/profile';
+import {Auth, ChatsService} from '@tt/data-access';
 
 @Component({
   selector: 'app-sidebar',
-  imports: [SvgIcon, NgForOf, SubscriberCard, RouterLink, AsyncPipe, ImgUrlPipe, RouterLinkActive],
+  imports: [SvgIcon, SubscriberCard, RouterLink, AsyncPipe, ImgUrlPipe, RouterLinkActive],
   templateUrl: './sidebar.html',
   styleUrl: './sidebar.scss',
+  changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class Sidebar {
+export class Sidebar implements OnInit {
   profileService = inject(Profile);
-
   subscribers$ = this.profileService.getSubscribersShortList();
+  authService = inject(Auth)
+  chatService = inject(ChatsService)
+  wsSubscribe!: Subscription;
+  destroyRef = inject(DestroyRef);
+  unreadMessages: WritableSignal<number> = this.chatService.unreadMessagesCount
 
   me = this.profileService.me;
+
+  // connectWs() {
+  //   this.wsSubscribe?.unsubscribe()
+  //   this.wsSubscribe = this.chatService.connectWs()
+  //     .pipe(takeUntilDestroyed(this.destroyRef))
+  //     .subscribe(message => {
+  //       if (isErrorMessage(message)) {
+  //         console.log('Неверный токен')
+  //         this.reconnect()
+  //       }
+  //     })
+  // }
+
+ // async reconnect() {
+ //      await firstValueFrom(this.profileService.getMe())
+ //      await firstValueFrom(timer(2000))
+ //       this.connectWs()
+ //  }
 
   menuItems = [
     {
@@ -39,5 +63,7 @@ export class Sidebar {
 
   ngOnInit() {
     firstValueFrom(this.profileService.getMe());
+
+    this.chatService.connectWs().subscribe()
   }
 }

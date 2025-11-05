@@ -1,4 +1,4 @@
-import { Component, input } from '@angular/core';
+import {ChangeDetectionStrategy, Component, input} from '@angular/core';
 import {AvatarCircle} from '@tt/common-ui';
 import {IProfile} from '@tt/interfaces/profile';
 
@@ -7,6 +7,7 @@ import {IProfile} from '@tt/interfaces/profile';
   imports: [AvatarCircle],
   templateUrl: './profile-header.html',
   styleUrl: './profile-header.scss',
+  changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class ProfileHeader {
   profile = input<IProfile>();
