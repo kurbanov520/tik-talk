@@ -1,0 +1,29 @@
+.stack {
+  width: 100%;
+  display: flex;
+  text-align: center;
+  flex-wrap: wrap;
+  gap: 12px;
+  border-bottom: 1px solid var(--light-color);
+  padding: 10px 0;
+}
+
+.stack-btn {
+  padding: 4px 8px;
+  background: var(--dark-color);
+  border: 1px solid white;
+  border-radius: 4px;
+  display: inline-flex;
+  align-items: center;
+  color: var(--light-color);
+  gap: 4px;
+  font-weight: 700;
+  cursor: pointer;
+}
+
+.stack-input {
+  background: none;
+  border: none;
+  color: var(--light-color);
+  outline: none;
+}

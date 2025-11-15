@@ -1,9 +1,11 @@
 :host {
   display: grid;
   grid-gap: 20px;
+  position: absolute;
 }
 
 .profile-card__wrapper {
   display: grid;
   grid-gap: 8px;
+  margin-top: 107px;
 }

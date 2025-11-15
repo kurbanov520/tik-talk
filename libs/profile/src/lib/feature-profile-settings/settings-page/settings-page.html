@@ -33,21 +33,10 @@
       <app-avatar-upload></app-avatar-upload>
     </label>
 
-    <div class="telemaster">
-      <label class="tt-form-label">
-        <span class="tt-form-label__text">Место работы</span>
-        <input type="text" class="tt-form-input" formControlName="city" />
-      </label>
+    <lib-stack-input formControlName="stack"></lib-stack-input>
 
-      <button class="btn-icon" [routerLink]="['/experimental']">
-        <svg icon="settings" class="svg16"></svg>
-      </button>
-    </div>
+    <lib-address-input formControlName="city"></lib-address-input>
 
-    <label class="tt-form-label">
-      <span class="tt-form-label__text">Навыки (стэк)</span>
-      <input type="text" class="tt-form-input" formControlName="stack" />
-    </label>
   </div>
 
   <div>

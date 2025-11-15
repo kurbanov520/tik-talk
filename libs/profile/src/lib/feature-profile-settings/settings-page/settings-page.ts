@@ -1,23 +1,16 @@
 import {ChangeDetectionStrategy, Component, effect, inject, ViewChild} from '@angular/core';
-import { ProfileHeader } from '../../ui/profile-header/profile-header';
-import {
-  FormBuilder,
-  FormControl,
-  FormGroup,
-  ReactiveFormsModule,
-  Validators,
-} from '@angular/forms';
-import { firstValueFrom } from 'rxjs';
-import { AvatarUpload } from '../../ui/avatar-upload/avatar-upload';
-import { toObservable } from '@angular/core/rxjs-interop';
-import { AsyncPipe } from '@angular/common';
-import { RouterLink } from '@angular/router';
-import { SvgIcon } from '@tt/common-ui';
-import { Profile } from '@tt/profile';
+import {ProfileHeader} from '../../ui/profile-header/profile-header';
+import {FormBuilder, ReactiveFormsModule, Validators,} from '@angular/forms';
+import {firstValueFrom} from 'rxjs';
+import {AvatarUpload} from '../../ui/avatar-upload/avatar-upload';
+import {toObservable} from '@angular/core/rxjs-interop';
+import {AsyncPipe} from '@angular/common';
+import {AddressInput, StackInput} from '@tt/common-ui';
+import {Profile} from '@tt/profile';
 
 @Component({
   selector: 'app-settings-page',
-  imports: [ProfileHeader, ReactiveFormsModule, AvatarUpload, AsyncPipe, SvgIcon, RouterLink],
+  imports: [ProfileHeader, ReactiveFormsModule, AvatarUpload, AsyncPipe, StackInput, AddressInput],
   templateUrl: './settings-page.html',
   styleUrl: './settings-page.scss',
   changeDetection: ChangeDetectionStrategy.OnPush,
@@ -36,7 +29,7 @@ export class SettingsPage {
     username: [{ value: '', disabled: true }, Validators.required],
     description: [''],
     stack: [''],
-    city: [''],
+    city: [null],
   });
 
   constructor() {
@@ -44,8 +37,6 @@ export class SettingsPage {
       //@ts-ignore
       this.form.patchValue({
         ...this.profileService.me(),
-        //@ts-ignore
-        stack: this.mergeStack(this.profileService.me()?.stack),
       });
     });
   }
@@ -64,22 +55,7 @@ export class SettingsPage {
     //@ts-ignore
       this.profileService.patchProfile({
         ...this.form.value,
-        stack: this.splitStack(this.form.value.stack),
       })
     );
-  }
-
-  splitStack(stack: string | null | string[] | undefined): string[] {
-    if (!stack) return [];
-    if (Array.isArray(stack)) return stack;
-
-    return stack.split(',');
-  }
-
-  mergeStack(stack: string | null | string[] | undefined) {
-    if (!stack) return '';
-    if (Array.isArray(stack)) return stack.join(',');
-
-    return stack;
   }
 }

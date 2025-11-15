@@ -6,6 +6,7 @@ import { BehaviorSubject, catchError, filter, switchMap, tap, throwError } from 
 let isRefreshing$ = new BehaviorSubject<boolean>(false);
 
 export const authTokenInterceptor: HttpInterceptorFn = (req, next) => {
+  if(req.url.includes('dadata.ru')) return next(req);
   const authService = inject(Auth);
   const token = authService.token;
 

@@ -1,0 +1,11 @@
+<div class="stack">
+  @for (stack of value$ | async; track stack; let i = $index) {
+    <div class="stack-div">
+      <button (click)="onTagDelete(i)" type="button" class="stack-btn"><svg class="svg10" icon="close"></svg>
+        {{ stack }}</button>
+    </div>
+  }
+
+  <input [(ngModel)]="innerInput" type="text" class="stack-input">
+
+</div>

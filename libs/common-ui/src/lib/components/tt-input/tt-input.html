@@ -1,0 +1,9 @@
+<label class="tt-form-label mb16">
+  <ng-content></ng-content>
+  <input
+    class="tt-input"
+    [type]="type()"
+    [ngModel]="text"
+    (ngModelChange)="onModelChange($event)"
+  >
+</label>

@@ -1,10 +1,8 @@
-import {ChangeDetectionStrategy, Component, inject, signal} from '@angular/core';
-import { ProfileFilters } from '../profile-filters/profile-filters';
-import { ProfileCard } from '../../ui/profile-card/profile-card';
+import {ChangeDetectionStrategy, Component, inject} from '@angular/core';
+import {ProfileFilters} from '../profile-filters/profile-filters';
+import {ProfileCard} from '../../ui/profile-card/profile-card';
 import {Store} from '@ngrx/store';
 import {profileActions, selectFilteredProfiles} from '../../data';
-import {InfiniteScrollTriggerComponent} from '@tt/common-ui';
-import {WaIntersectionObservee, WaIntersectionObserverDirective} from '@ng-web-apis/intersection-observer';
 import {InfiniteScrollDirective} from 'ngx-infinite-scroll';
 import {Profile} from '@tt/data-access';
 import {firstValueFrom, scan, Subject} from 'rxjs';
@@ -13,7 +11,7 @@ import {AsyncPipe} from '@angular/common';
 
 @Component({
   selector: 'app-search-page',
-  imports: [ProfileCard, ProfileFilters, InfiniteScrollTriggerComponent, WaIntersectionObserverDirective, WaIntersectionObservee, InfiniteScrollDirective, AsyncPipe],
+  imports: [ProfileCard, ProfileFilters, InfiniteScrollDirective, AsyncPipe],
   templateUrl: './search-page.html',
   styleUrl: './search-page.scss',
   changeDetection: ChangeDetectionStrategy.OnPush,
@@ -29,7 +27,6 @@ export class SearchPage {
   timeToFetch() {
     this.store.dispatch(profileActions.setPage({}))
   }
-
   profilesSubject$ = new Subject<IProfile[]>()
 
   infiniteProfiles$ = this.profilesSubject$.pipe(
