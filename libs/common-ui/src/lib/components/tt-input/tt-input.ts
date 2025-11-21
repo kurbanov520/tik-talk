@@ -1,4 +1,4 @@
-import {ChangeDetectionStrategy, ChangeDetectorRef, Component, forwardRef, inject, signal} from '@angular/core';
+import {ChangeDetectionStrategy, ChangeDetectorRef, Component, forwardRef, inject, input, signal} from '@angular/core';
 import {ControlValueAccessor, FormsModule, NG_VALUE_ACCESSOR} from '@angular/forms';
 
 @Component({
@@ -19,6 +19,7 @@ export class TtInput implements ControlValueAccessor {
     type = signal<'text' | 'password'>('text')
     cdr = inject(ChangeDetectorRef)
     text: string | null = null
+    placeholder = input<string>('')
 
     onChange: any
 

@@ -19,17 +19,7 @@ export class DadataService {
       }
     })
       .pipe(
-        map(res => {
-          return Array.from(
-            new Set(
-              res.suggestions.map(
-                (suggestion: DadataSuggestion) => {
-                  return suggestion.data.city
-                }
-              )
-            )
-          )
-        })
+        map(res => res.suggestions)
       )
   }
 

@@ -1,6 +1,6 @@
 import {ChangeDetectionStrategy, Component, effect, inject, ViewChild} from '@angular/core';
 import {ProfileHeader} from '../../ui/profile-header/profile-header';
-import {FormBuilder, ReactiveFormsModule, Validators,} from '@angular/forms';
+import {FormBuilder, FormControl, FormGroup, ReactiveFormsModule, Validators,} from '@angular/forms';
 import {firstValueFrom} from 'rxjs';
 import {AvatarUpload} from '../../ui/avatar-upload/avatar-upload';
 import {toObservable} from '@angular/core/rxjs-interop';
@@ -29,7 +29,7 @@ export class SettingsPage {
     username: [{ value: '', disabled: true }, Validators.required],
     description: [''],
     stack: [''],
-    city: [null],
+    city: [],
   });
 
   constructor() {

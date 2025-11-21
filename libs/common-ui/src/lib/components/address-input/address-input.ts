@@ -1,5 +1,5 @@
 import {ChangeDetectionStrategy, ChangeDetectorRef, Component, forwardRef, inject, signal} from '@angular/core';
-import {ControlValueAccessor, FormControl, NG_VALUE_ACCESSOR, ReactiveFormsModule} from '@angular/forms';
+import {ControlValueAccessor, FormControl, FormGroup, NG_VALUE_ACCESSOR, ReactiveFormsModule} from '@angular/forms';
 import {TtInput} from '../tt-input/tt-input';
 import {DadataService} from '../../data';
 import {debounceTime, switchMap, tap} from 'rxjs';
@@ -27,6 +27,18 @@ export class AddressInput implements ControlValueAccessor {
     #dadataService = inject(DadataService)
     cdr = inject(ChangeDetectorRef)
 
+    suggestForm = new FormGroup({
+      city: new FormControl(''),
+      street: new FormControl(''),
+      building: new FormControl(''),
+    })
+
+    constructor() {
+      this.suggestForm.valueChanges.subscribe(val => {
+        this.onChange(val)
+      })
+    }
+
     isDropdownOpened = signal<boolean>(false)
 
     suggestions$ = this.innerSearchControl.valueChanges
@@ -42,7 +54,21 @@ export class AddressInput implements ControlValueAccessor {
         })
       )
 
-    writeValue(city: string | null): void {
+    writeValue(city: string | null | any): void {
+
+      if(!city) {
+        this.suggestForm.reset()
+        this.innerSearchControl.setValue('')
+        return
+      }
+
+      const address = city.split(' ')
+      this.suggestForm.patchValue({
+        city: address[0] || '',
+        street: address[1] || '',
+        building: address[2] || ''
+      })
+
       this.innerSearchControl.patchValue(city, {emitEvent: false})
     }
 
@@ -55,22 +81,26 @@ export class AddressInput implements ControlValueAccessor {
     }
 
     setDisabledState?(isDisabled: boolean): void {
-      
+
     }
 
     onChange(value: any) {
-
     }
 
     onTouched() {
 
     }
 
-    onSuggestionPick(city: string) {
+    onSuggestionPick(suggest: DadataSuggestion) {
       this.isDropdownOpened.set(false)
-      this.innerSearchControl.patchValue(city, {emitEvent: false})
-      this.onChange(city)
-      this.cdr.detectChanges()
-    }
+      this.suggestForm.patchValue({
+        city: suggest.data.city,
+        street: suggest.data.street,
+        building: suggest.data.house
+      })
 
+      this.onChange(this.innerSearchControl.value)
+      this.cdr.detectChanges()
+
+    }
 }

@@ -1,4 +1,5 @@
 <lib-tt-input
+  placeholder="Поиск"
   [formControl]="innerSearchControl"
 >
 </lib-tt-input>
@@ -7,9 +8,20 @@
   @if (isDropdownOpened()) {
     <div class="suggestions-dropdown">
       @for (suggest of suggestions; track suggest) {
-        <button (click)="onSuggestionPick(suggest)" class="suggest-btn">{{ suggest }}</button>
+        <button (click)="onSuggestionPick(suggest)" class="suggest-btn">
+          {{ suggest.data.city}}
+          {{ suggest.data.street}}
+          {{ suggest.data.house}}
+        </button>
       }
     </div>
   }
 }
 
+<div [formGroup]="suggestForm">
+    <lib-tt-input formControlName="city" placeholder="Город"></lib-tt-input>
+  <div class="lib-tt-input">
+    <lib-tt-input formControlName="street" placeholder="Улица"></lib-tt-input>
+    <lib-tt-input formControlName="building" placeholder="Дом"></lib-tt-input>
+  </div>
+</div>

@@ -48,3 +48,4 @@ Thumbs.db
 .cursor/rules/nx-rules.mdc
 .github/instructions/nx.instructions.md
 .angular
+libs/common-ui/src/lib/data/services/token.ts
